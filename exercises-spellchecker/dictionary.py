@@ -5,6 +5,7 @@ with a python dictionary here--anytime you see the word
 "dictionary", we mean English dictionary).
 """
 
+
 def load(dictionary_name):
     """
     Opens the file called `dictionary_name` and returns
@@ -15,23 +16,35 @@ def load(dictionary_name):
 
     Each line in the file contains exactly one word.
     """
-    # TODO: remove the pass line and write your own code
-    pass
+    global counter
+    counter = 0 
+    wordlist=[[] for x in range(2000)]
+    with open(dictionary_name) as words:
+        for word in words:
+            stripword = word.strip()
+            wordhash = hash(stripword) % 2000
+            wordlist[wordhash].append(stripword)
+            counter = counter + 1
+    return wordlist
+
 
 def check(dictionary, word):
     """
     Returns True if `word` is in the English `dictionary`.
     """
-    pass
+    return (word in dictionary[(hash(word.lower())%2000)])
 
 def size(dictionary):
     """
     Returns the number of words in the English `dictionary`.
     """
-    pass
+    return counter
 
 def unload(dictionary):
     """
     Removes everything from the English `dictionary`.
     """
-    pass
+    for subdict in dictionary:
+        for word in subdict:
+            subdict.remove(word)
+        dictionary.remove(subdict)
